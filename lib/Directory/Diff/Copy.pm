@@ -78,7 +78,7 @@ sub new_only_callback
             die "The file to copy, '$copied_file', does not exist";
         }
         copy "$dir/$file", "$output_dir/$file"
-            or die "Copy failed: $!";
+            or die "Copy '$dir/$file' to '$output_dir/$file' failed: $!";
         $data->{count}++;
     }
 }
