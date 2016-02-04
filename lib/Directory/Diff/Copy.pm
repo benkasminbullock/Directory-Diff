@@ -14,7 +14,7 @@ require Exporter;
 @EXPORT_OK = qw/copy_diff_only/;
 use warnings;
 use strict;
-our $VERSION = 0.01;
+our $VERSION = '0.02';
 use Carp;
 use File::Copy;
 use File::Path;

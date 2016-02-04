@@ -1,7 +1,8 @@
 use warnings;
 use strict;
-use Test::More tests => 9;
-use FindBin;
+use Test::More;
+use FindBin '$Bin';
+use File::Path 'remove_tree';
 BEGIN { use_ok('Directory::Diff') };
 use Directory::Diff qw/get_only get_diff ls_dir/;
 
@@ -84,6 +85,8 @@ ok ($diff{"boo/bananas"}, "Detected simple difference");
 
 rmdirs (@dirs);
 
+done_testing ();
+
 exit;
 
 sub create_file 
@@ -99,7 +102,7 @@ sub create_file
 sub rmdirs
 {
     for (@_) {
-        system ("rm -rf $_");
+	remove_tree ($_);
         die if -d $_;
     }
 }

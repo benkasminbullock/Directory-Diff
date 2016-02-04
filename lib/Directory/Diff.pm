@@ -9,7 +9,7 @@ Directory::Diff - recursively find differences between similar directories
      # Do a "diff" between "old_dir" and "new_dir"
 
      directory_diff ('old_dir', 'new_dir', 
-                     {diff => \&diff
+                     {diff => \& diff,
                       dir1_only => \& old_only});
 
      # User-supplied callback for differing files
@@ -38,7 +38,7 @@ required.
 
 =head1 FUNCTIONS
 
-The main function of this module is L<directory_diff>. The other
+The main function of this module is L</directory_diff>. The other
 functions are helper functions, but these can be exported on request.
 
 =cut
@@ -50,7 +50,7 @@ require Exporter;
                 default_diff default_dir_only/;
 use warnings;
 use strict;
-our $VERSION = 0.01;
+our $VERSION = '0.02';
 use Carp;
 use Cwd;
 use File::Compare;
@@ -173,7 +173,7 @@ sub get_only
 Get a list of files which are in both C<dir1> and C<dir2>, but which
 are different. This uses L<File::Compare> to test the files for
 differences. It searches subdirectories. Usually the hashes
-C<%dir1_ls> and C<%dir2_ls> are those output by L<ls_dir>.
+C<%dir1_ls> and C<%dir2_ls> are those output by L</ls_dir>.
 
 =cut
 
