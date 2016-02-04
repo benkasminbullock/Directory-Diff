@@ -1,5 +1,3 @@
-=head1 Directory::Diff
-
 =head1 NAME
 
 Directory::Diff - recursively find differences between similar directories
