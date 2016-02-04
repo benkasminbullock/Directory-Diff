@@ -48,9 +48,12 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT_OK = qw/ls_dir get_only get_diff directory_diff
                 default_diff default_dir_only/;
+%EXPORT_TAGS = (
+    all => \@EXPORT_OK,
+);
 use warnings;
 use strict;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use Carp;
 use Cwd;
 use File::Compare;
@@ -74,7 +77,7 @@ sub ls_dir
 {
     my ($dir, $verbose) = @_;
     if (! $dir || ! -d $dir) {
-        croak "bad inputs";
+        croak "No such directory '$dir'";
     }
     my %ls;
     if (! wantarray) {
@@ -145,8 +148,8 @@ sub get_only
     my ($ls_dir1_ref, $ls_dir2_ref, $verbose) = @_;
 
     if (ref ($ls_dir1_ref) ne "HASH" ||
-            ref ($ls_dir2_ref) ne "HASH") {
-        croak "bad inputs";
+	ref ($ls_dir2_ref) ne "HASH") {
+        croak "get_only requires hash references as arguments";
     }
     my %only;
 
@@ -181,8 +184,8 @@ sub get_diff
 {
     my ($dir1, $ls_dir1_ref, $dir2, $ls_dir2_ref, $verbose) = @_;
     if (ref ($ls_dir1_ref) ne "HASH" ||
-            ref ($ls_dir2_ref) ne "HASH") {
-        croak "bad inputs";
+	ref ($ls_dir2_ref) ne "HASH") {
+        croak "get_diff requires hash references as arguments 2 and 4";
     }
     my %different;
     for my $file (keys %$ls_dir1_ref) {
@@ -281,14 +284,23 @@ print messages about what it finds and what it does.
 sub directory_diff
 {
     my ($dir1, $dir2, $callback_ref, $verbose) = @_;
-    if (! $dir1 || ! -d $dir1 || ! $dir2 || ! -d $dir2) {
-        croak "bad inputs";
+    if (! $dir1 || ! $dir2) {
+        croak "directory_diff requires two directory names";
+    }
+    if (! -d $dir1) {
+	croak "directory_diff: first directory '$dir1' does not exist";
+    }
+    if (! -d $dir2) {
+	croak "directory_diff: second directory '$dir2' does not exist";
     }
     if ($verbose) {
         print "Directory diff of $dir1 and $dir2 in progress ...\n";
     }
-    if (! $callback_ref || ref $callback_ref ne "HASH") {
-        croak "bad callback input";
+    if (! $callback_ref) {
+        croak "directory_diff: no callbacks supplied";
+    }
+    if (ref $callback_ref ne "HASH") {
+        croak "directory_diff: callback not hash reference";
     }
     my %ls_dir1 = ls_dir ($dir1);
     my %ls_dir2 = ls_dir ($dir2);

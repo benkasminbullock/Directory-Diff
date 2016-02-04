@@ -14,7 +14,7 @@ require Exporter;
 @EXPORT_OK = qw/copy_diff_only/;
 use warnings;
 use strict;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use Carp;
 use File::Copy;
 use File::Path;
@@ -135,6 +135,5 @@ sub copy_diff_only
                     $verbose);
     return $data{count};
 }
-
 
 1;
