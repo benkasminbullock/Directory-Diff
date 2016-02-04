@@ -1,10 +1,11 @@
-=head1 Directory::Diff::Copy
-
 =head1 NAME
 
 Directory::Diff::Copy - Copy differences between two directories
 
 =head1 SYNOPSIS
+
+   use Directory::Diff::Copy 'copy_diff_only';
+   copy_diff_only ($old_dir, $new_dir, $output_dir);
 
 =cut
 

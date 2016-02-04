@@ -1,5 +1,9 @@
 Revision history for Perl module Directory::Diff
 
+0.03 2016-02-05
+
+- Documentation improvements
+
 0.02 2016-02-05
 
 - Fixed documentation errors
