@@ -102,7 +102,7 @@ sub create_file
 sub rmdirs
 {
     for (@_) {
-	remove_tree ($_);
+	(-d $_) && remove_tree ($_);
         die if -d $_;
     }
 }
