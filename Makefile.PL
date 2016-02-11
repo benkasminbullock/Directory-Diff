@@ -16,6 +16,7 @@ WriteMakefile (
     VERSION_FROM => $pm,
     ABSTRACT_FROM => $pod,
     AUTHOR => 'Ben Bullock <bkb@cpan.org>',
+    LICENSE => 'artistic_2',
     PREREQ_PM => {
         'File::Compare' => 0,
         'File::Copy' => 0,
