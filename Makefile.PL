@@ -7,14 +7,14 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 my $pm = 'lib/Directory/Diff.pm';
-my $pod = 'lib/Directory/Diff.pm';
+my $pod = 'lib/Directory/Diff.pod';
 my $github = 'github.com/benkasminbullock/Directory-Diff';
 my $repo = "https://$github";
 
 WriteMakefile (
     NAME => 'Directory::Diff',
-    VERSION_FROM => 'lib/Directory/Diff.pm',
-    ABSTRACT_FROM => 'lib/Directory/Diff.pm',
+    VERSION_FROM => $pm,
+    ABSTRACT_FROM => $pod,
     AUTHOR => 'Ben Bullock <bkb@cpan.org>',
     PREREQ_PM => {
         'File::Compare' => 0,

@@ -10,7 +10,7 @@ binmode $builder->todo_output,    ":utf8";
 binmode STDOUT, ":encoding(utf8)";
 binmode STDERR, ":encoding(utf8)";
 use Perl::Build::Pod 'pod_checker';
-my $filepath = "$Bin/../lib/Directory/Diff.pm";
+my $filepath = "$Bin/../lib/Directory/Diff.pod";
 my $errors = pod_checker ($filepath);
 ok (@$errors == 0, "No errors in Directory::Diff");
 my $cfilepath = "$Bin/../lib/Directory/Diff/Copy.pm";
