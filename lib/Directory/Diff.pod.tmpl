@@ -160,7 +160,28 @@ This seemingly does a very similar thing to Directory::Diff.
 
 =back
 
+=head1 DEPENDENCIES
+
+This section lists Perl modules which this depends on, with a
+rationale for why they are used.
+
+=over
+
+=item L<File::Compare>
+
+File::Compare is used to check whether two files are different or not.
+
+=back
+
+=head1 CONTRIBUTORS
+
+This section lists people who have contributed to the module.
+
+Mohammad S. Anwar (MANWAR) contributed fixes for broken tests.
+
 =head1 MOTIVATION
+
+This section discusses why I wrote the module and what I use it for.
 
 The reason I wrote this module is because C<< `diff --recursive` >>
 stops when it finds a subdirectory which is in one directory and not
@@ -176,14 +197,20 @@ I needed to go down into the subdirectory and find all the files which
 were in all the subdirectories, so I wrote this.
 
 I've been using this module for updating web sites with a lot of pages
-since 2009. I keep a local copy of the uploaded web site in a
-directory like F<old-site>, and then rebuild all the pages in another
-directory like F<new-site>, then I use L<Directory::Diff::Copy> to put
-the changed files into yet another directory, like
+since 2009, to avoid repeatedly having to upload the entire
+site's-worth of pages for each small change. The way I use this is as
+follows. I keep a local copy of the uploaded web site in a directory
+like F<old-site>, and then rebuild all the pages in another directory
+like F<new-site>, then I use L<Directory::Diff::Copy> to put the
+changed files into yet another directory, like
 F<changed-site-files>. Once the changed files are copied, then I tar,
 gzip, and upload the directory of changed files, and untar it at the
-web host. I'm currently using this for almost all the static content
-for the following web sites: L<http://www.sljfaq.org>,
+web host, replacing only files which have changed. I also delete the
+F<old-site> directory and rename F<new-site> to F<old-site> at this
+point in preparation for the next upload.
+
+I'm currently using this for almost all the static content for the
+following web sites: L<http://www.sljfaq.org>,
 L<http://kanji.sljfaq.org>, and L<http://www.lemoda.net>. I put this
 module on github in about 2012 and on CPAN in 2016.
 
