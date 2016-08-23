@@ -48,7 +48,7 @@ sub make_subdir
     $path =~ s!/[^/]+$!/!;
     if (! -d $path) {
         if ($verbose) {
-            print "Creating $path.\n";
+            print "Directory::Diff::Copy: Creating $path.\n";
         }
         mkpath ($path);
         if (! -d $path) {
@@ -78,10 +78,23 @@ sub new_only_callback
         if (! -f $copied_file) {
             die "The file to copy, '$copied_file', does not exist";
         }
-        copy "$dir/$file", "$output_dir/$file"
-            or die "Copy '$dir/$file' to '$output_dir/$file' failed: $!";
+        sane_copy ("$dir/$file", "$output_dir/$file");
         $data->{count}++;
     }
+}
+
+sub sane_copy
+{
+    my ($from, $to) = @_;
+    my (undef, undef, $mode) = stat ($from);
+    if (! defined $mode) {
+	die "Cannot stat $from: $!";
+    }
+    # perldoc -f stat
+    copy ($from, $to)
+        or die "Copy of '$from' to '$to' failed: $!";
+    # perldoc -f chmod
+    chmod $mode & 07777, $to or die "chmod on $to failed: $!";
 }
 
 sub diff_callback
@@ -94,10 +107,9 @@ sub diff_callback
     my $path = "$output_dir/$file";
     make_subdir ($path, $verbose);
     if ($verbose) {
-        print "Copying '$new_dir/$file' to '$output_dir/$file'.\n";
+        print "Directory::Diff::Copy: Copying '$new_dir/$file' to '$output_dir/$file'.\n";
     }
-    copy ("$new_dir/$file", "$output_dir/$file")
-        or die "Copy of '$new_dir/$file' to '$output_dir/$file' failed: $!";
+    sane_copy ("$new_dir/$file", "$output_dir/$file");
     $data->{count}++;
 }
 

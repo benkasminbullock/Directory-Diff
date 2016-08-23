@@ -1,5 +1,9 @@
 Revision history for Perl module Directory::Diff
 
+0.05 2016-08-23
+
+- Copy permissions when files are copied
+
 0.04 2016-02-11
 
 - Fix broken test
