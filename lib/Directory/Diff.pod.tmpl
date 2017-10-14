@@ -38,55 +38,8 @@ required.
 =head1 FUNCTIONS
 
 The main function of this module is L</directory_diff>. The other
-functions are helper functions, but these can be exported on request.
-
-=head2 ls_dir
-
-     my %ls = ls_dir ("dir");
-
-C<ls_dir> makes a hash containing a true value for each file and
-directory which is found under the directory given as the first
-argument.
-
-If a second argument with a true value is set, it prints debugging
-messages. For example
-
-     my %ls = ls_dir ("dir", 1);
-
-=head2 get_only
-
-     my %only = get_only (\%dir1, \%dir2);
-
-Given two hashes containing true values for each file or directory
-under two directories, return a hash containing true values for the
-files and directories which are in the first directory hash but not in
-the second directory hash.
-
-For example, if
-
-     %dir1 = ("file" => 1, "dir/" => 1, "dir/file" => 1);
-
-and 
-
-     %dir2 = ("dir/" => 1, "dir2/" => 1);
-
-C<get_only> returns
-
-     %only = ("file" => 1, "dir/file" => 1);
-
-A third parameter for debugging makes the module print messages
-on what is found if set to a true value, for example,
-
-     my %only = get_only (\%dir1, \%dir2, 1);
-
-=head2 get_diff
-
-     my %diff = get_diff ("dir1", \%dir1_ls, "dir2", \%dir2_ls);
-
-Get a list of files which are in both C<dir1> and C<dir2>, but which
-are different. This uses L<File::Compare> to test the files for
-differences. It searches subdirectories. Usually the hashes
-C<%dir1_ls> and C<%dir2_ls> are those output by L</ls_dir>.
+functions listed here are helper functions, but these can be exported
+on request.
 
 =head2 directory_diff
 
@@ -144,6 +97,54 @@ midway, the user must use something like C<eval { }> and C<die>.
 
 A fourth argument, if set to any true value, causes directory_diff to
 print messages about what it finds and what it does.
+
+=head2 ls_dir
+
+     my %ls = ls_dir ("dir");
+
+C<ls_dir> makes a hash containing a true value for each file and
+directory which is found under the directory given as the first
+argument.
+
+If a second argument with a true value is set, it prints debugging
+messages. For example
+
+     my %ls = ls_dir ("dir", 1);
+
+=head2 get_only
+
+     my %only = get_only (\%dir1, \%dir2);
+
+Given two hashes containing true values for each file or directory
+under two directories, return a hash containing true values for the
+files and directories which are in the first directory hash but not in
+the second directory hash.
+
+For example, if
+
+     %dir1 = ("file" => 1, "dir/" => 1, "dir/file" => 1);
+
+and 
+
+     %dir2 = ("dir/" => 1, "dir2/" => 1);
+
+C<get_only> returns
+
+     %only = ("file" => 1, "dir/file" => 1);
+
+A third parameter for debugging makes the module print messages
+on what is found if set to a true value, for example,
+
+     my %only = get_only (\%dir1, \%dir2, 1);
+
+=head2 get_diff
+
+     my %diff = get_diff ("dir1", \%dir1_ls, "dir2", \%dir2_ls);
+
+Get a list of files which are in both C<dir1> and C<dir2>, but which
+are different. This uses L<File::Compare> to test the files for
+differences. It searches subdirectories. Usually the hashes
+C<%dir1_ls> and C<%dir2_ls> are those output by L</ls_dir>.
 
 =head2 default_dir_only
 
