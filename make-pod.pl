@@ -18,11 +18,6 @@ if (! $ok) {
 my %pbv = (base => $Bin);
 my $version = get_version (%pbv);
 my $commit = get_commit (%pbv);
-# Names of the input and output files containing the documentation.
-
-my $pod = 'Diff.pod';
-my $input = "$Bin/lib/Directory/$pod.tmpl";
-my $output = "$Bin/lib/Directory/$pod";
 
 # Template toolkit variable holder
 
@@ -56,6 +51,12 @@ for my $example (@examples) {
 	do_system ("perl -I$Bin/blib/lib -I$Bin/blib/arch $example > $output 2>&1", $verbose);
     }
 }
+
+# Names of the input and output files containing the documentation.
+
+my $pod = 'Diff.pod';
+my $input = "$Bin/lib/Directory/$pod.tmpl";
+my $output = "$Bin/lib/Directory/$pod";
 
 $tt->process ($input, \%vars, $output, binmode => 'utf8')
     or die '' . $tt->error ();
