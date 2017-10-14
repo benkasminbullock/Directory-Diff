@@ -21,14 +21,22 @@ C<$output_dir> does not exist, this creates it. If C<$output_dir> does
 exist, this removes all files from it using L<File::Path/rmtree>
 before copying.
 
-The return value is the number of files copied.
+The return value is the number of files copied. This value is useful
+to detect whether anything was actually copied or not.
+
+    if (copy_diff_only ($o, $n, $t)) {
+        # we have actually copied things, so do something
+    } else {
+        # nothing copied, don't need to do any more work
+    }
 
 An optional fourth parameter switches on debugging information if set
 to any true value:
 
     copy_diff_only ($old_dir, $new_dir, $output_dir, 1);
 
-The debugging information specifies each file that has been copied.
+The debugging information is printed to standard output. It specifies
+each file that has been copied.
 
 =head1 SEE ALSO
 

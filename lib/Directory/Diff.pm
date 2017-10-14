@@ -9,9 +9,9 @@ require Exporter;
 use warnings;
 use strict;
 our $VERSION = '0.06';
-use Carp;
-use Cwd;
-use File::Compare;
+use Carp qw/carp croak/;
+use Cwd 'getcwd';
+use File::Compare 'compare';
 
 sub ls_dir
 {

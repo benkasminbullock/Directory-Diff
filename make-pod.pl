@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Template;
 use FindBin '$Bin';
-use Perl::Build qw/get_version get_commit/;
+use Perl::Build qw/get_version get_commit get_info/;
 use Perl::Build::Pod ':all';
 use Deploy qw/do_system older/;
 use Getopt::Long;
@@ -18,12 +18,14 @@ if (! $ok) {
 my %pbv = (base => $Bin);
 my $version = get_version (%pbv);
 my $commit = get_commit (%pbv);
+my $info = get_info (%pbv);
 
 # Template toolkit variable holder
 
 my %vars = (
     version => $version,
     commit => $commit,
+    info => $info,
 );
 
 my $tt = Template->new (

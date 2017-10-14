@@ -13,7 +13,7 @@ use Perl::Build::Pod 'pod_checker';
 my $filepath = "$Bin/../lib/Directory/Diff.pod";
 my $errors = pod_checker ($filepath);
 ok (@$errors == 0, "No errors in Directory::Diff");
-my $cfilepath = "$Bin/../lib/Directory/Diff/Copy.pm";
+my $cfilepath = "$Bin/../lib/Directory/Diff/Copy.pod";
 my $cerrors = pod_checker ($cfilepath);
 ok (@$cerrors == 0, "No errors in Directory::Diff::Copy");
 
