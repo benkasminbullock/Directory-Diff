@@ -38,6 +38,9 @@ WriteMakefile (
             },
 #           homepage => 'http://',
         },
+        no_index => {
+            directory => [ qw( examples/old_dir examples/new_dir ) ],
+        },
     },
     MIN_PERL_VERSION => '5.006001',
 );
