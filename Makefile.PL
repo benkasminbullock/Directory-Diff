@@ -19,9 +19,6 @@ WriteMakefile (
     LICENSE => 'perl',
     PREREQ_PM => {
         'File::Compare' => 0,
-        'File::Copy' => 0,
-        'Cwd' => 0,
-        'File::Path' => 0,
     },
     META_MERGE => {
         'meta-spec' => {
