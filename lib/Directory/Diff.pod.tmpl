@@ -146,22 +146,6 @@ are different. This uses L<File::Compare> to test the files for
 differences. It searches subdirectories. Usually the hashes
 C<%dir1_ls> and C<%dir2_ls> are those output by L</ls_dir>.
 
-=head2 default_dir_only
-
-     use Directory::Diff qw/directory_diff default_dir_only/;
-     directory_diff ('old', 'new', {dir1_only => \&default_dir_only});
-
-A simple routine to print out when a file is only in one of the
-directories. This is for testing the C<Directory::Diff> module.
-
-=head2 default_diff
-
-     use Directory::Diff qw/directory_diff default_diff/;
-     directory_diff ('old', 'new', {dir1_only => \&default_diff});
-
-A simple routine to print out when a file is different between the
-directories. This is for testing the C<Directory::Diff> module.
-
 =head1 SEE ALSO
 
 =head2 CPAN modules

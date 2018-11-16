@@ -4,7 +4,7 @@ use Test::More;
 use FindBin '$Bin';
 use File::Path 'remove_tree';
 BEGIN { use_ok('Directory::Diff') };
-use Directory::Diff qw/get_only get_diff ls_dir/;
+use Directory::Diff qw/get_only get_diff ls_dir directory_diff/;
 
 my %dir1 = ("file" => 1, "dir/" => 1, "dir/file" => 1);
 my %dir2 = ("dir/" => 1, "dir2/" => 1);
@@ -83,11 +83,34 @@ create_file ("bananas", $new_boo, "no");
 ok (keys %diff == 1, "Correct number of results");
 ok ($diff{"boo/bananas"}, "Detected simple difference");
 
+my %dd;
+
+directory_diff ($old_dir, $new_dir, {
+    dir1_only => \& dir_only,
+    dir2_only => \& dir_only,
+    diff => \& diff,
+    data => \%dd,
+}, undef);
+
+ok ($dd{$old_dir}{$new_dir}{'boo/bananas'}, "Found different file");
+
 rmdirs (@dirs);
 
 done_testing ();
 
 exit;
+
+sub dir_only
+{
+    my ($data, $dir, $file) = @_;
+    $data->{$dir}{$file} = 1;
+}
+
+sub diff
+{
+    my ($data, $dir1, $dir2, $file) = @_;
+    $data->{$dir1}{$dir2}{$file} = 1;
+}
 
 sub create_file 
 {

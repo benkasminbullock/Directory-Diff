@@ -1,8 +1,7 @@
 package Directory::Diff;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw/ls_dir get_only get_diff directory_diff
-                default_diff default_dir_only/;
+@EXPORT_OK = qw/ls_dir get_only get_diff directory_diff/;
 %EXPORT_TAGS = (
     all => \@EXPORT_OK,
 );
@@ -165,18 +164,6 @@ sub directory_diff
         carp "directory_diff does not return a meaningful value";
     }
     return;
-}
-
-sub default_dir_only
-{
-    my ($data, $dir, $file) = @_;
-    print "File '$file' is only in '$dir'.\n";
-}
-
-sub default_diff
-{
-    my ($data, $dir1, $dir2, $file) = @_;
-    print "File '$file' is different between '$dir1' and '$dir2'.\n";
 }
 
 1;
