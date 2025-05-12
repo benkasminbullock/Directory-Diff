@@ -3,22 +3,38 @@ use warnings;
 use strict;
 use Template;
 use FindBin '$Bin';
-use Perl::Build qw/get_version get_commit get_info/;
-use Perl::Build::Pod ':all';
-use Deploy qw/do_system older/;
 use Getopt::Long;
+
 my $ok = GetOptions (
     'force' => \my $force,
+    'nopb' => \my $nopb,
     'verbose' => \my $verbose,
 );
 if (! $ok) {
     usage ();
     exit;
 }
-my %pbv = (base => $Bin);
-my $version = get_version (%pbv);
-my $commit = get_commit (%pbv);
-my $info = get_info (%pbv);
+
+# Perl::Build dependencies start here.
+my $version = 'no version';
+my $commit = {commit => 'no commit id', date => 'no date'};
+my $info = {version => 'no version', name => 'no name', repo => 'no repo', date => 'no date'};
+if (! $nopb) {
+    eval {
+	require Perl::Build;
+	Perl::Build->import (qw/get_version get_commit get_info/);
+	my %pbv = (base => $Bin);
+	$version = get_version (%pbv);
+	$commit = get_commit (%pbv);
+	$info = get_info (%pbv);
+    };
+}
+if ($@) {
+    $nopb = 1;
+    warn "$@";
+}
+use Perl::Build::Pod ':all';
+use Deploy qw/do_system older/;
 
 # Template toolkit variable holder
 
@@ -46,11 +62,13 @@ my $tt = Template->new (
 );
 
 my @examples = <$Bin/examples/*.pl>;
-for my $example (@examples) {
-    my $output = $example;
-    $output =~ s/\.pl$/-out.txt/;
-    if (older ($output, $example) || $force) {
-	do_system ("perl -I$Bin/blib/lib -I$Bin/blib/arch $example > $output 2>&1", $verbose);
+if (! $nopb) {
+    for my $example (@examples) {
+	my $output = $example;
+	$output =~ s/\.pl$/-out.txt/;
+	if (older ($output, $example) || $force) {
+	    do_system ("perl -I$Bin/blib/lib -I$Bin/blib/arch $example > $output 2>&1", $verbose);
+	}
     }
 }
 
@@ -67,7 +85,7 @@ exit;
 
 sub usage
 {
-print <<EOF;
+    print <<EOF;
 --verbose
 --force
 EOF
