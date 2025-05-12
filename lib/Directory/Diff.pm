@@ -15,16 +15,16 @@ use File::Compare 'compare';
 sub ls_dir
 {
     my ($dir, $verbose) = @_;
-    if (! $dir || ! -d $dir) {
+    if (! defined $dir || ! -d $dir) {
         croak "No such directory '$dir'";
     }
     my %ls;
     if (! wantarray) {
-        die "bad call";
+        die "bad call with ignored value";
     }
     my $original_dir = getcwd ();
-    chdir ($dir);
-    opendir (my $dh, ".");
+    chdir ($dir) or die "chdir ($dir) failed: $!";
+    opendir (my $dh, ".") or die "opendir for $dir failed: $!";
     my @files = readdir ($dh);
     for my $file (@files) {
         if ($file eq '.' || $file eq '..') {
@@ -44,8 +44,8 @@ sub ls_dir
             warn "Skipping unknown type of file $file.\n";
         }
     }
-    closedir ($dh);
-    chdir ($original_dir);
+    closedir ($dh) or die "closedir for $dir failed: $!";
+    chdir ($original_dir) or die "chdir for $original_dir failed: $!";
     if ($verbose) {
         for my $k (keys %ls) {
             print "$k $ls{$k}\n";

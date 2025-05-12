@@ -111,6 +111,9 @@ messages. For example
 
      my %ls = ls_dir ("dir", 1);
 
+As a debugging measure it halts execution if its return value is
+ignored.
+
 =head2 get_only
 
      my %only = get_only (\%dir1, \%dir2);
@@ -206,6 +209,8 @@ See L<Directory::Diff::Copy>.
 This section lists people who have contributed to the module.
 
 Mohammad S. Anwar (MANWAR) contributed fixes for broken tests.
+
+Slaven Rezic (ESERTE) contributed bug fixes and suggestions for improvement.
 
 =head1 MOTIVATION
 
