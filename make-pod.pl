@@ -28,13 +28,15 @@ if (! $nopb) {
 	$commit = get_commit (%pbv);
 	$info = get_info (%pbv);
     };
+    require Deploy;
+    Deploy->import (qw/do_system older/);
+    require Perl::Build::Pod;
+    Perl::Build::Pod->import ('pbtmpl');
 }
 if ($@) {
     $nopb = 1;
     warn "$@";
 }
-use Perl::Build::Pod ':all';
-use Deploy qw/do_system older/;
 
 # Template toolkit variable holder
 
@@ -44,20 +46,25 @@ my %vars = (
     info => $info,
 );
 
+my @includes = (
+    $Bin,
+    "$Bin/examples",
+    "$Bin/substitutes",
+);
+my %filters = (xtidy => \& noop);
+if (! $nopb) {
+    shift @includes, pbtmpl();
+    $filters{xtidy} = [
+	\& xtidy,
+	0,
+    ],
+}
+
 my $tt = Template->new (
     ABSOLUTE => 1,
-    INCLUDE_PATH => [
-	$Bin,
-	pbtmpl (),
-	"$Bin/examples",
-    ],
+    INCLUDE_PATH => \@includes,
     ENCODING => 'UTF8',
-    FILTERS => {
-        xtidy => [
-            \& xtidy,
-            0,
-        ],
-    },
+    FILTERS => \%filters,
     STRICT => 1,
 );
 
@@ -89,4 +96,8 @@ sub usage
 --verbose
 --force
 EOF
+}
+sub noop
+{
+    return '';
 }
