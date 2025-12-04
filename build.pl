@@ -11,7 +11,7 @@ if (! $ok) {
     exit;
 }
 if (! $nopb) {
-    print "Bog";
+    print "★ Using Perl::Build:\n\n";
     eval {
 	require Perl::Build;
 	Perl::Build->import ();

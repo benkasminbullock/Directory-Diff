@@ -46,11 +46,6 @@ sub ls_dir
     }
     closedir ($dh) or die "closedir for $dir failed: $!";
     chdir ($original_dir) or die "chdir for $original_dir failed: $!";
-    if ($verbose) {
-        for my $k (keys %ls) {
-            print "$k $ls{$k}\n";
-        }
-    }
     return %ls;
 }
 

@@ -20,6 +20,7 @@ my $version = 'no version';
 my $commit = {commit => 'no commit id', date => 'no date'};
 my $info = {version => 'no version', name => 'no name', repo => 'no repo', date => 'no date'};
 if (! $nopb) {
+    print "★ Using Perl::Build to make documentation:\n\n";
     eval {
 	require Perl::Build;
 	Perl::Build->import (qw/get_version get_commit get_info/);
@@ -31,7 +32,7 @@ if (! $nopb) {
     require Deploy;
     Deploy->import (qw/do_system older/);
     require Perl::Build::Pod;
-    Perl::Build::Pod->import ('pbtmpl');
+    Perl::Build::Pod->import (qw!pbtmpl xtidy!);
 }
 if ($@) {
     $nopb = 1;
